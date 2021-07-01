@@ -1,6 +1,8 @@
 import "../css/form.css";
 
 import { Component } from "react";
+import DatePicker from "react-date-picker";
+import TimeRangePicker from "@wojtekmaj/react-timerange-picker";
 
 class Form extends Component {
   constructor(props) {
@@ -10,9 +12,8 @@ class Form extends Component {
       name: "",
       artist: null,
       image: null,
-      date: null,
-      start_time: null,
-      end_time: null,
+      date: new Date("2021", "01", "01"),
+      timeRange: ["09:05", "12:00"],
       heighest_bid: 0,
     };
 
@@ -73,37 +74,19 @@ class Form extends Component {
           <span>
             Bid Date <span className="required">*</span>
           </span>
-          <input
-            type="text"
-            className="input-field"
-            name="date"
+          <DatePicker
+            onChange={(dp) => this.setState({ date: dp })}
             value={this.state.date}
-            onChange={this.handleChange}
-          />
+          />className
         </label>
-        <label for="start_time">
+        <label for="timeRange">
           <span>
             Start Time <span className="required">*</span>
           </span>
-          <input
-            type="text"
-            className="input-field"
-            name="start_time"
-            value={this.state.start_time}
-            onChange={this.handleChange}
-          />
-        </label>
-        <label for="end_time">
-          <span>
-            End Time <span className="required">*</span>
-          </span>
-          <input
-            type="text"
-            className="input-field"
-            name="end_time"
-            value={this.state.end_time}
-            onChange={this.handleChange}
-          />
+          <TimeRangePicker 
+          onChange={(tp) => this.setState({timeRange: tp})}
+          value={this.state.timeRange}
+            />
         </label>
 
         <label>
