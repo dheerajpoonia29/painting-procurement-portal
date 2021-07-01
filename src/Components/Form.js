@@ -4,6 +4,8 @@ import { Component } from "react";
 import DatePicker from "react-date-picker";
 import TimeRangePicker from "@wojtekmaj/react-timerange-picker";
 
+import { ApiClient } from '../ApiManager'
+
 class Form extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +20,28 @@ class Form extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  getAll(){
+    ApiClient.filterProfile(
+      // TODO: how to get user from all user initially
+      { gender: oppositeGender, permanent_city: "jaipur"  },
+      token
+    )
+      .then((res) => {
+        this.showSpinner(false);
+        this.setState({allUser: res.data.data})
+        this.props.navigation.navigate("TabbarScene");
+      })
+      .catch((err) => {
+        this.showSpinner(false);
+        console.log("!! getAllUser error = ", err);
+        this.showOkAlert(
+          this.ls("errorAlertTitle"),
+          this.ls("errorResponseTitle")
+        );
+      });
+  }
   }
 
   handleChange(event) {
