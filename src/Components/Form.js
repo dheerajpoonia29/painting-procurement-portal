@@ -4,44 +4,21 @@ import { Component } from "react";
 import DatePicker from "react-date-picker";
 import TimeRangePicker from "@wojtekmaj/react-timerange-picker";
 
-import { ApiClient } from '../ApiManager'
+import ApiClient from "../ApiManager";
 
 class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: new Date().getUTCMilliseconds(),
       name: "",
-      artist: null,
-      image: null,
-      date: new Date("2021", "01", "01"),
-      timeRange: ["09:05", "12:00"],
+      artist: "",
+      owner: "",
+      image: "",
+      date: new Date(),
+      time: ["11:05", "03:10"],
       heighest_bid: 0,
     };
-
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  getAll(){
-    ApiClient.filterProfile(
-      // TODO: how to get user from all user initially
-      { gender: oppositeGender, permanent_city: "jaipur"  },
-      token
-    )
-      .then((res) => {
-        this.showSpinner(false);
-        this.setState({allUser: res.data.data})
-        this.props.navigation.navigate("TabbarScene");
-      })
-      .catch((err) => {
-        this.showSpinner(false);
-        console.log("!! getAllUser error = ", err);
-        this.showOkAlert(
-          this.ls("errorAlertTitle"),
-          this.ls("errorResponseTitle")
-        );
-      });
-  }
   }
 
   handleChange(event) {
@@ -50,6 +27,19 @@ class Form extends Component {
 
   handleSubmit() {
     console.log("submit form = ", this.state);
+    let params = {
+      name: this.state.name,
+      artist: this.state.artist,
+      owner: this.state.owner,
+      image: this.state.image,
+      date: this.state.date.toString(),
+      time: this.state.time.join(','),
+      heighest_bid: this.state.heighest_bid,
+    };
+    // TODO: blockchain.registerPainting(res.data.id, this.state.owner)
+    ApiClient.createNew(params)
+      .then((res) => {alert(`${res.data.msg}, id=${res.data.id}`)})
+      .catch((err) => console.log("!getAll = ", err));
   }
 
   render() {
@@ -67,6 +57,7 @@ class Form extends Component {
             name="name"
             value={this.state.name}
             onChange={this.handleChange}
+            placeholder="Your painting name"
           />
         </label>
         <label for="artist">
@@ -79,6 +70,7 @@ class Form extends Component {
             name="artist"
             value={this.state.artist}
             onChange={this.handleChange}
+            placeholder="Your name"
           />
         </label>
         <label for="image">
@@ -91,6 +83,7 @@ class Form extends Component {
             name="image"
             value={this.state.image}
             onChange={this.handleChange}
+            placeholder="Your image url"
           />
         </label>
         <label for="date">
@@ -100,16 +93,17 @@ class Form extends Component {
           <DatePicker
             onChange={(dp) => this.setState({ date: dp })}
             value={this.state.date}
-          />className
+          />
+          className
         </label>
-        <label for="timeRange">
+        <label for="time">
           <span>
             Start Time <span className="required">*</span>
           </span>
-          <TimeRangePicker 
-          onChange={(tp) => this.setState({timeRange: tp})}
-          value={this.state.timeRange}
-            />
+          <TimeRangePicker
+            onChange={(tp) => this.setState({ time: tp })}
+            value={this.state.time}
+          />
         </label>
 
         <label>

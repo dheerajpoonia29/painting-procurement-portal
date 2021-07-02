@@ -8,20 +8,22 @@ class ApiManager {
     createNew: "create-new"
   };
 
-  getAll(params) {
+  getAll = async () => {
+    let url = ApiManager.baseUrl + ApiManager.endPoints.getAll
+    console.log("url = ", url)
     return axios({
-      url: ApiManager.baseUrl + ApiManager.endPoints.signIn,
-      method: "post",
-      data: params,
+      url: ApiManager.baseUrl + ApiManager.endPoints.getAll,
+      method: "GET",
       headers: { "Content-Type": "application/json" },
       timeout: 15000,
     });
   }
 
-  getById() {
+  getById(id) {
     return axios({
       url: ApiManager.baseUrl + ApiManager.endPoints.getById,
       method: "GET",
+      params: { id: id },
       timeout: 15000,
     });
   }
@@ -29,7 +31,7 @@ class ApiManager {
   createNew(params) {
     return axios({
       url: ApiManager.baseUrl + ApiManager.endPoints.createNew,
-      method: "post",
+      method: "POST",
       data: params,
       headers: { "Content-Type": "application/json" },
       timeout: 15000,

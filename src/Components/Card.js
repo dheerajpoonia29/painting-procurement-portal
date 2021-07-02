@@ -1,11 +1,21 @@
 import "../css/card.css";
 
-function isBidOpen(date, sTime, eTime, role){
-  console.log('ctx = ', date, sTime, eTime, role)
-  if(role==='bidder'){
+import TimerCountDown from "./TimerCountdown";
+
+function isBidOpen(date, time, role) {
+  if (role === "bidder") {
     return false;
   }
   return true;
+}
+
+function getById(id) {
+  console.log("id= =", id);
+  return (
+    <div>
+      <h1>sdlfjsdlf {id}</h1>
+    </div>
+  );
 }
 
 function Card(props) {
@@ -14,29 +24,39 @@ function Card(props) {
 
   return (
     <div className="card">
+      <h4 className="title">{painting.name}</h4>
+      <p>By {painting.artist}</p>
       <div className="image">
-        <img src={painting.image} />
+        <a onClick={() => getById(painting.id)}>
+          <img src={painting.image} />
+        </a>
       </div>
       <div className="info">
-        {/* Image Detail */}
-        <hr class="solid"></hr>
-        <h4 className="title">{painting.name}</h4>
-        <p>By {painting.artist}</p>
-        {/* <p>Onwer {blockchain.getOwner(painting.id}</p> */}
+        {/* TODO: blockchain.getOwner(painting.id) */}
 
-        {/* Painting Detail */}
-        <hr class="solid"></hr>
-        <p>Expire: {painting.bid.expire ? "Closed" : "Open"}</p>
-        <p>
-          StartTime:{painting.bid.start_time}, endTime:{painting.bid.end_time}
-        </p>
-        <p>Heigest Bid: {painting.bid.heighest_bid}</p>
+        <hr className="solid"></hr>
+        <div>
+          <p>Heigest Bid: {painting.heighest_bid}</p>
+        </div>
 
-        <hr class="solid"></hr>
-        <input type="number" disabled={isBidOpen(painting.bid.date, painting.bid.start_time, painting.bid.end_time, role)} />
-        <button type="button" disabled={isBidOpen(painting.bid.date, painting.bid.start_time, painting.bid.end_time, role)}>
-          Place Bid
-        </button>
+        <hr className="solid"></hr>
+        <div>
+          <TimerCountDown bidDate={painting.date} bidTime={painting.time} />
+        </div>
+        
+        <hr className="solid"></hr>
+        <div>
+          <input
+            type="number"
+            disabled={isBidOpen(painting.date, painting.time, role)}
+          />
+          <button
+            type="button"
+            disabled={isBidOpen(painting.date, painting.time, role)}
+          >
+            Place Bid
+          </button>
+        </div>
       </div>
     </div>
   );
