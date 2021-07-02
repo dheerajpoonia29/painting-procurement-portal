@@ -1,9 +1,9 @@
-.painting button:hover {
+.painting .form-button:hover {
   border: 1px solid rgba(12, 92, 175, 0.5);
   background: #fff;
 }
 
-.painting button {
+.painting .form-button {
   box-sizing: border-box;
   background: rgba(12, 92, 175, 0.015);
   outline: 1px solid rgba(12, 92, 175, 0.1);
@@ -20,7 +20,7 @@
   display: block;
 }
 
-.painting button:disabled {
+.painting .form-button:disabled {
   color: rgb(150, 150, 150);
   cursor: default;
   border: 1px solid rgba(12, 92, 175, 0.25);
@@ -68,7 +68,14 @@
   padding: 10px;
 }
 
+.painting .card .info .address{
+  overflow: hidden;
+  overflow-x: scroll;
+}
+
 .painting .title {
   color: #696969;
   text-transform: uppercase; 
 }
+
+

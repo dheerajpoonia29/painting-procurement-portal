@@ -11,13 +11,20 @@ class HomeScene extends Component {
     this.state = {
       action: "create",
       paintingJson: null,
+      paintingId: null,
     };
   }
 
   componentDidMount() {
-    ApiClient.getAll()
-    .then((res) => this.setState({paintingJson: res.data}))
-    .catch((err) => console.log("!getAll = ", err)); 
+    ApiClient.paintingGetAll()
+      .then((res) => this.setState({ paintingJson: res.data }))
+      .catch((err) => alert("!paintingGetAll = ", err));
+
+    ApiClient.painterGetByAddress("0xacfd43979764864ef2d89a2ae15c2afa24a4f099")
+      .then((res) => {
+        this.setState({ paintingId: res.data });
+      })
+      .catch((err) => alert(err));
   }
 
   inlineStyle = (current) => {
@@ -45,15 +52,20 @@ class HomeScene extends Component {
   }
 
   renderPainter() {
-    // blockchain.getPainterPaintingsId(msg.sender)
-    let myId = [1];
+    // TODO: blockchain.getPainterPaintingsId(current_metmask_address);
+    console.log('>> ', this.state.paintingId)
     return (
       <div className="painting">
-        {this.state.paintingJson!==null && this.state.paintingJson.map((data, key) => {
-          // if (myId.indexOf(data.id) !== -1)
-            return <Card data={data} action={"painter"} />;
-        })}
-        {this.state.paintingJson===null && <h1>Not painting found</h1>}
+        {this.state.paintingJson !== null &&
+          this.state.paintingJson.map((data, key) => {
+            if (
+              this.state.paintingId !== null
+               &&
+              this.state.paintingId.indexOf(data.id) !== -1
+            )
+              return <Card data={data} action={"painter"} />;
+          })}
+        {this.state.paintingJson === null && <h1>Not painting found</h1>}
       </div>
     );
   }
@@ -61,10 +73,11 @@ class HomeScene extends Component {
   renderBidder() {
     return (
       <div className="painting">
-        {this.state.paintingJson!==null && this.state.paintingJson.map((data, key) => {
-          return <Card data={data} action={"bidder"} />;
-        })}
-        {this.state.paintingJson===null && <h1>Not painting found</h1>}
+        {this.state.paintingJson !== null &&
+          this.state.paintingJson.map((data, key) => {
+            return <Card data={data} action={"bidder"} />;
+          })}
+        {this.state.paintingJson === null && <h1>Not painting found</h1>}
       </div>
     );
   }
@@ -91,14 +104,20 @@ class HomeScene extends Component {
           <button
             className="button"
             style={this.inlineStyle("painter")}
-            onClick={() => {this.componentDidMount();this.setState({ action: "painter" })}}
+            onClick={() => {
+              this.componentDidMount();
+              this.setState({ action: "painter" });
+            }}
           >
             Painter
           </button>
           <button
             className="button"
             style={this.inlineStyle("bidder")}
-            onClick={() => {this.componentDidMount();this.setState({ action: "bidder" })}}
+            onClick={() => {
+              this.componentDidMount();
+              this.setState({ action: "bidder" });
+            }}
           >
             Bidder
           </button>

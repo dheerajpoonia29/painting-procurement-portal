@@ -12,7 +12,7 @@ class Form extends Component {
     this.state = {
       name: "",
       artist: "",
-      owner: "",
+      painter: "",
       image: "",
       date: new Date(),
       time: ["11:05", "03:10"],
@@ -25,20 +25,40 @@ class Form extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
+  saveToBlockchain(res) {
+    alert(`${res.data.msg}\nPainting ID =${res.data.id}`);
+    let params = {
+      address: this.state.painter,
+      painting_id: `${res.data.id}`,
+    };
+    ApiClient.painterCreateNew(params)
+      .then((res) =>
+        res.data.msg && res.data.id
+          ? alert(`${res.data.msg}\nPainter ID =${res.data.id}`)
+          : alert(`Blockchain error !\nres = ${res}`)
+      )
+      .catch((err) => console.log("!saveToBlockchain = ", err));
+  }
+
   handleSubmit() {
     console.log("submit form = ", this.state);
     let params = {
       name: this.state.name,
       artist: this.state.artist,
-      owner: this.state.owner,
+      painter: this.state.painter,
       image: this.state.image,
       date: this.state.date.toString(),
-      time: this.state.time.join(','),
+      time: this.state.time.join(","),
       heighest_bid: this.state.heighest_bid,
+      is_bid_closed: "false",
     };
-    // TODO: blockchain.registerPainting(res.data.id, this.state.owner)
-    ApiClient.createNew(params)
-      .then((res) => {alert(`${res.data.msg}, id=${res.data.id}`)})
+    // TODO: blockchain.registerPainting(res.data.id, this.state.painter)
+    ApiClient.paintingCreateNew(params)
+      .then((res) => {
+        res.data.msg && res.data.id
+          ? this.saveToBlockchain(res)
+          : alert(`Data base error !\ndb_res = ${res}`);
+      })
       .catch((err) => console.log("!getAll = ", err));
   }
 
@@ -47,6 +67,19 @@ class Form extends Component {
       <div className="form-style-2">
         <div className="form-style-2-heading">Register your new painting</div>
         {/* <form action="" method="post"> */}
+        <label for="painter">
+          <span>
+            Address <span className="required">*</span>
+          </span>
+          <input
+            type="text"
+            className="input-field"
+            name="painter"
+            value={this.state.painter}
+            onChange={this.handleChange}
+            placeholder="Your metmask address"
+          />
+        </label>
         <label for="name">
           <span>
             Painting Name <span className="required">*</span>

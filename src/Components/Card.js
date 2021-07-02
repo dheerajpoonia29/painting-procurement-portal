@@ -2,37 +2,26 @@ import "../css/card.css";
 
 import TimerCountDown from "./TimerCountdown";
 
-function isBidOpen(date, time, role) {
-  if (role === "bidder") {
-    return false;
-  }
-  return true;
-}
-
-function getById(id) {
-  console.log("id= =", id);
-  return (
-    <div>
-      <h1>sdlfjsdlf {id}</h1>
-    </div>
-  );
-}
-
 function Card(props) {
   let painting = props.data;
-  let role = props.action;
 
   return (
     <div className="card">
-      <h4 className="title">{painting.name}</h4>
+      <h4 className="title">{painting.name} {painting.id}</h4>
       <p>By {painting.artist}</p>
       <div className="image">
-        <a onClick={() => getById(painting.id)}>
+        <a href="#">
           <img src={painting.image} />
         </a>
       </div>
       <div className="info">
         {/* TODO: blockchain.getOwner(painting.id) */}
+        <hr className="solid"></hr>
+        <div className="address">
+          <p>Painter: {painting.painter}</p>
+          <p>Bidder: {painting.bidder}</p>
+        </div>
+
 
         <hr className="solid"></hr>
         <div>
@@ -41,21 +30,7 @@ function Card(props) {
 
         <hr className="solid"></hr>
         <div>
-          <TimerCountDown bidDate={painting.date} bidTime={painting.time} />
-        </div>
-        
-        <hr className="solid"></hr>
-        <div>
-          <input
-            type="number"
-            disabled={isBidOpen(painting.date, painting.time, role)}
-          />
-          <button
-            type="button"
-            disabled={isBidOpen(painting.date, painting.time, role)}
-          >
-            Place Bid
-          </button>
+          <TimerCountDown bidDate={painting.date} paintingId={painting.id} bidTime={painting.time} role={props.action}/>
         </div>
       </div>
     </div>

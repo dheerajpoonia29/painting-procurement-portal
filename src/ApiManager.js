@@ -1,42 +1,74 @@
 import axios from "axios";
 
 class ApiManager {
-  static baseUrl = "http://127.0.0.1:3333/api/painting/";
-  static endPoints = {
-    getAll: "get-all",
-    getById: "get-by/:id",
-    createNew: "create-new"
+  static baseUrl = "http://127.0.0.1:3333/api/";
+  static paintingEndPoints = {
+    getAll: "painting/get-all",
+    getById: "painting/get-by/:id",
+    createNew: "painting/create-new"
+  };
+  static painterEndPoints = {
+    getAll: "painter/get-all",
+    getById: "painter/get-by/:address",
+    createNew: "painter/create-new"
   };
 
-  getAll = async () => {
-    let url = ApiManager.baseUrl + ApiManager.endPoints.getAll
-    console.log("url = ", url)
+  paintingGetAll = async () => {
     return axios({
-      url: ApiManager.baseUrl + ApiManager.endPoints.getAll,
+      url: ApiManager.baseUrl + ApiManager.paintingEndPoints.getAll,
       method: "GET",
       headers: { "Content-Type": "application/json" },
       timeout: 15000,
     });
   }
 
-  getById(id) {
+  paintingGetById(id) {
     return axios({
-      url: ApiManager.baseUrl + ApiManager.endPoints.getById,
+      url: ApiManager.baseUrl + `painting/get-by/${id}`,
       method: "GET",
       params: { id: id },
       timeout: 15000,
     });
   }
 
-  createNew(params) {
+  paintingCreateNew(params) {
     return axios({
-      url: ApiManager.baseUrl + ApiManager.endPoints.createNew,
+      url: ApiManager.baseUrl + ApiManager.paintingEndPoints.createNew,
       method: "POST",
       data: params,
       headers: { "Content-Type": "application/json" },
       timeout: 15000,
     });
   }
+
+  painterGetAll = async () => {
+    return axios({
+      url: ApiManager.baseUrl + ApiManager.painterEndPoints.getAll,
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      timeout: 15000,
+    });
+  }
+
+  painterGetByAddress(address) {
+    return axios({
+      url: ApiManager.baseUrl + `painter/get-by/${address}`,
+      method: "GET",
+      timeout: 15000,
+    });
+  }
+
+  painterCreateNew(params) {
+    return axios({
+      url: ApiManager.baseUrl + ApiManager.painterEndPoints.createNew,
+      method: "POST",
+      data: params,
+      headers: { "Content-Type": "application/json" },
+      timeout: 15000,
+    });
+  }
+
+  
 }
 
 const ApiClient = new ApiManager();
