@@ -18,13 +18,13 @@ class HomeScene extends Component {
   componentDidMount() {
     ApiClient.paintingGetAll()
       .then((res) => this.setState({ paintingJson: res.data }))
-      .catch((err) => alert("!paintingGetAll = ", err));
+      .catch((err) => alert(`Api error, ${err.code}`));
 
-    ApiClient.painterGetByAddress("0xacfd43979764864ef2d89a2ae15c2afa24a4f099")
+    ApiClient.painterGetByAddress("sfds")
       .then((res) => {
         this.setState({ paintingId: res.data });
       })
-      .catch((err) => alert(err));
+      .catch((err) => alert(`Api error, ${err}`));
   }
 
   inlineStyle = (current) => {
@@ -53,7 +53,6 @@ class HomeScene extends Component {
 
   renderPainter() {
     // TODO: blockchain.getPainterPaintingsId(current_metmask_address);
-    console.log('>> ', this.state.paintingId)
     return (
       <div className="painting">
         {this.state.paintingJson !== null &&
@@ -75,7 +74,9 @@ class HomeScene extends Component {
       <div className="painting">
         {this.state.paintingJson !== null &&
           this.state.paintingJson.map((data, key) => {
-            return <Card data={data} action={"bidder"} />;
+             {
+              return <Card data={data} action={"bidder"} />;
+            }             
           })}
         {this.state.paintingJson === null && <h1>Not painting found</h1>}
       </div>

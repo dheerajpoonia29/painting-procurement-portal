@@ -2,6 +2,7 @@ import axios from "axios";
 
 class ApiManager {
   static baseUrl = "http://127.0.0.1:3333/api/";
+
   static paintingEndPoints = {
     getAll: "painting/get-all",
     getById: "painting/get-by/:id",
@@ -11,6 +12,12 @@ class ApiManager {
     getAll: "painter/get-all",
     getById: "painter/get-by/:address",
     createNew: "painter/create-new"
+  };
+  static biddingEndPoints = {
+    getAll: "bidding/get-all",
+    getById: "bidding/get-by/:address",
+    postBid: "bidding/post-bid",
+    closeBid: "bidding/close-bid"
   };
 
   paintingGetAll = async () => {
@@ -68,7 +75,42 @@ class ApiManager {
     });
   }
 
-  
+  biddingGetAll = async () => {
+    return axios({
+      url: ApiManager.baseUrl + ApiManager.biddingEndPoints.getAll,
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      timeout: 15000,
+    });
+  }
+
+  biddingGetByAddress(address) {
+    return axios({
+      url: ApiManager.baseUrl + `painter/get-by/${address}`,
+      method: "GET",
+      timeout: 15000,
+    });
+  }
+
+  biddingPostBid(params) {
+    return axios({
+      url: ApiManager.baseUrl + ApiManager.biddingEndPoints.postBid,
+      method: "POST",
+      data: params,
+      headers: { "Content-Type": "application/json" },
+      timeout: 15000,
+    });
+  }  
+
+  biddingCloseBid(params) {
+    return axios({
+      url: ApiManager.baseUrl + ApiManager.biddingEndPoints.closeBid,
+      method: "POST",
+      data: params,
+      headers: { "Content-Type": "application/json" },
+      timeout: 15000,
+    });
+  }  
 }
 
 const ApiClient = new ApiManager();

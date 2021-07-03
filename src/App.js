@@ -1,15 +1,29 @@
-import './css/app.css';
+import "./css/app.css";
 
-import Header from './Components/Header'
-import HomeScene from './Components/HomeScene';
+import Header from "./Components/Header";
+import HomeScene from "./Components/HomeScene";
+import { Component } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <Header />
-      <HomeScene />
-    </div>
-  );
+class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+
+    }
+  }
+
+  componentDidCatch(){
+    
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <Header />
+        <HomeScene />
+      </div>
+    );
+  }
 }
 
 export default App;

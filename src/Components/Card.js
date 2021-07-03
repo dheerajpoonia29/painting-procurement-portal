@@ -1,13 +1,13 @@
 import "../css/card.css";
 
-import TimerCountDown from "./TimerCountdown";
+import Bidding from "./Bidding";
 
 function Card(props) {
   let painting = props.data;
 
   return (
     <div className="card">
-      <h4 className="title">{painting.name} {painting.id}</h4>
+      <h4 className="title">{painting.name} - {painting.id}</h4>
       <p>By {painting.artist}</p>
       <div className="image">
         <a href="#">
@@ -22,15 +22,8 @@ function Card(props) {
           <p>Bidder: {painting.bidder}</p>
         </div>
 
-
-        <hr className="solid"></hr>
         <div>
-          <p>Heigest Bid: {painting.heighest_bid}</p>
-        </div>
-
-        <hr className="solid"></hr>
-        <div>
-          <TimerCountDown bidDate={painting.date} paintingId={painting.id} bidTime={painting.time} role={props.action}/>
+          <Bidding heighestBid={painting.heighest_bid} bidClosed={painting.is_bid_closed} bidDate={painting.date} paintingId={painting.id} bidTime={painting.time} role={props.action}/>
         </div>
       </div>
     </div>

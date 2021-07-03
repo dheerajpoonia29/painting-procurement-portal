@@ -14,8 +14,8 @@ class Form extends Component {
       artist: "",
       painter: "",
       image: "",
-      date: new Date(),
-      time: ["11:05", "03:10"],
+      date: "",
+      time: "",
       heighest_bid: 0,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -25,23 +25,7 @@ class Form extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  saveToBlockchain(res) {
-    alert(`${res.data.msg}\nPainting ID =${res.data.id}`);
-    let params = {
-      address: this.state.painter,
-      painting_id: `${res.data.id}`,
-    };
-    ApiClient.painterCreateNew(params)
-      .then((res) =>
-        res.data.msg && res.data.id
-          ? alert(`${res.data.msg}\nPainter ID =${res.data.id}`)
-          : alert(`Blockchain error !\nres = ${res}`)
-      )
-      .catch((err) => console.log("!saveToBlockchain = ", err));
-  }
-
   handleSubmit() {
-    console.log("submit form = ", this.state);
     let params = {
       name: this.state.name,
       artist: this.state.artist,
@@ -56,10 +40,25 @@ class Form extends Component {
     ApiClient.paintingCreateNew(params)
       .then((res) => {
         res.data.msg && res.data.id
-          ? this.saveToBlockchain(res)
+          ? this.savePaintingToPainter(res)
           : alert(`Data base error !\ndb_res = ${res}`);
       })
-      .catch((err) => console.log("!getAll = ", err));
+      .catch((err) => alert(`Api error, ${err.code}`));
+  }
+
+  savePaintingToPainter(res) {
+    alert(`${res.data.msg}\nPainting ID =${res.data.id}`);
+    let params = {
+      address: this.state.painter,
+      painting_id: `${res.data.id}`,
+    };
+    ApiClient.painterCreateNew(params)
+      .then((res) =>
+        res.data.msg && res.data.id
+          ? alert(`${res.data.msg}\nPainter ID =${res.data.id}`)
+          : alert(`Blockchain error !\nres = ${res}`)
+      )
+      .catch((err) => alert(`Api error, ${err.code}`));
   }
 
   render() {
