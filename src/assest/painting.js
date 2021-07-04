@@ -113,7 +113,7 @@ export let paintingData = [
   {
     id: 8,
     name: "Las Meninas",
-    artist: "Diego Velázquez",
+    artist: "Diego Velázquez",npm
     image:
       "https://dynaimage.cdn.cnn.com/cnn/q_auto,w_797,c_fit/http%3A%2F%2Fcdn.cnn.com%2Fcnnnext%2Fdam%2Fassets%2F191029115119-09-most-famous-paintings-las-meninas.jpg",
 

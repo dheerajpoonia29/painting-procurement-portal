@@ -16,14 +16,10 @@ function Card(props) {
       </div>
       <div className="info">
         {/* TODO: blockchain.getOwner(painting.id) */}
-        <hr className="solid"></hr>
-        <div className="address">
-          <p>Painter: {painting.painter}</p>
-          <p>Bidder: {painting.bidder}</p>
-        </div>
+        
 
         <div>
-          <Bidding heighestBid={painting.heighest_bid} bidClosed={painting.is_bid_closed} bidDate={painting.date} paintingId={painting.id} bidTime={painting.time} role={props.action}/>
+          <Bidding painter={painting.painter} bidder={painting.bidder} heighestBid={painting.heighest_bid} bidClosed={painting.is_bid_closed} bidDate={painting.date} paintingId={painting.id} bidTime={painting.time} role={props.action}/>
         </div>
       </div>
     </div>

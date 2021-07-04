@@ -7,7 +7,7 @@ class Bidding extends Component {
     super(props);
     this.state = {
       // TODO: get current metamask address
-      bidder: "0x2",
+      bidder: this.props.bidder,
       bidDate: null,
       bidMonth: null,
       bidYear: null,
@@ -15,13 +15,16 @@ class Bidding extends Component {
       todayMonth: null,
       todayYear: null,
       bidDuration: null,
-      bid: false,
       heighest_bid: 0,
+      is_time_in_range: false,
     };
     this.bidInput = React.createRef();
+
+    // temp area
+    // this.checkTime();
   }
 
-  componentDidMount() {
+  componentWillMount() {
     let bidDate = new Date(this.props.bidDate);
     let todayDate = new Date();
 
@@ -35,7 +38,7 @@ class Bidding extends Component {
     });
 
     this.setState({
-      bidDuration: this.getTime(),
+      bidDuration: this.getBidDuration(),
     });
 
     this.setState({
@@ -46,28 +49,29 @@ class Bidding extends Component {
   handleSubmit() {
     let input = this.bidInput;
     let currentBid = parseInt(input.current.value);
-    if(currentBid>this.state.heighest_bid){
+    let currentAdd = "0x7";
+    if (currentBid > this.state.heighest_bid) {
       this.setState(
         {
-          heighest_bid: Math.max(currentBid, this.state.heighest_bid),
+          heighest_bid: currentBid,
+          bidder: currentAdd,
         },
-        this.postBid()
+        this.postBid(currentBid, currentAdd)
       );
-    }    
+    }
   }
 
-  postBid() {
+  postBid(currentBid, currentAdd) {
     // TODO: get current metamask address
     let params = {
-      address: "0x2",
+      address: currentAdd,
       painting_id: this.props.paintingId,
-      heighest_bid: this.state.heighest_bid,
+      heighest_bid: currentBid,
     };
-    console.log("post params = ", params);
     // TODO: blockchain.registerPainting(res.data.id, this.state.painter);
     ApiClient.biddingPostBid(params)
       .then((res) => {
-        res.data.msg ? alert(res.data.msg) : alert(res); 
+        res.data.msg ? alert(res.data.msg) : alert(res);
       })
       .catch((err) => {
         console.log("**db-error=", err);
@@ -89,7 +93,7 @@ class Bidding extends Component {
       });
   }
 
-  getTime() {
+  getBidDuration() {
     let h1 = parseInt(this.props.bidTime.split(",")[0].split(":")[0]);
     let m1 = parseInt(this.props.bidTime.split(",")[0].split(":")[1]);
     let h2 = parseInt(this.props.bidTime.split(",")[1].split(":")[0]);
@@ -111,61 +115,65 @@ class Bidding extends Component {
 
   checkTime() {
     // https://stackoverflow.com/questions/4455282/call-a-javascript-function-at-a-specific-time-of-day
-    let flag = false;
-    let id = setInterval(() => {
-      if (this.props.paintingId === 23)
-        console.log(
-          `>paintingId=${this.props.paintingId} = ${
-            this.props.bidTime.split(",")[0].split(":")[0]
-          } === ${new Date().getHours()}`
-        );
-      if (
-        parseInt(this.props.bidTime.split(",")[0].split(":")[0]) ===
-        new Date().getHours()
-      ) {
-        clearInterval(id);
-        this.setState({ bid: true });
-      }
-    }, 1000);
-    return;
+
+    let sec = 5000;
+
+    let h1 = parseInt(this.props.bidTime.split(",")[0].split(":")[0]);
+    let m1 = parseInt(this.props.bidTime.split(",")[0].split(":")[1]);
+    let h2 = parseInt(this.props.bidTime.split(",")[1].split(":")[0]);
+    let m2 = parseInt(this.props.bidTime.split(",")[1].split(":")[1]);
+
+    let ch = new Date().getHours();
+    let cm = new Date().getMinutes();
+
+    setInterval(() => {
+      ch = new Date().getHours();
+      cm = new Date().getMinutes();
+      console.log(">> ", ch, " ", cm);
+    }, sec);
   }
 
   checkDate() {
-    return this.state.bidDate === this.state.todayDate &&
+    if (
+      this.state.bidDate === this.state.todayDate &&
       this.state.bidMonth === this.state.todayMonth &&
       this.state.bidYear === this.state.todayYear
-      ? true
-      : false;
-  }
-
-  bidDateExpired() {
-    if (this.state.bidYear < this.state.todayDate) {
-      return true;
-    } else if (this.state.bidMonth < this.state.todayDate) {
-      return true;
-    } else if (this.state.bidDate < this.state.todayDate) {
-      return true;
-    }
-    return false;
+    )
+      return "today";
+    else if (
+      this.state.bidYear < this.state.todayDate ||
+      this.state.bidMonth < this.state.todayDate ||
+      this.state.bidDate < this.state.todayDate
+    )
+      return "expired";
+    else return "future";
   }
 
   checkAccess() {
-    return this.checkDate() && this.props.bidClosed === "false" ? true : false;
+    return (
+      this.checkDate() === "today" &&
+      (this.props.bidClosed === "false" ? true : false)
+    );
   }
 
   renderBidInfo() {
     return (
       <div>
         <hr className="solid"></hr>
+        <div className="address">
+          <p>Painter: {this.props.painter}</p>
+          <p>Bidder: {this.state.bidder}</p>
+        </div>
+        <hr className="solid"></hr>
         <p style={{ backgroundColor: "green", color: "white" }}>
           Bid Status:{" "}
           {this.props.bidClosed === "true"
             ? "Closed"
-            : this.checkDate() === true
-            ? "Today is Bidding Date"
-            : this.bidDateExpired() === true
+            : this.checkDate() === "today"
+            ? "Bidding Date Today"
+            : this.checkDate() === "expired"
             ? "Expired"
-            : "Will Open on Bidding Date"}
+            : "Will Open"}
         </p>
         <hr className="solid"></hr>
         <p>
@@ -179,7 +187,7 @@ class Bidding extends Component {
 
   renderBidTimer() {
     // TODO: implement check time perfectly
-    if (this.checkDate() && this.props.bidClosed === "false") {
+    if (this.checkAccess()) {
       return (
         <div>
           <hr className="solid"></hr>
@@ -192,7 +200,7 @@ class Bidding extends Component {
             <CountdownCircleTimer
               key={this.props.paintingId}
               isPlaying={true}
-              duration={this.getTime()}
+              duration={this.state.bidDuration}
               colors={"#FE6F6B"}
               strokeWidth={10}
               size={80}
