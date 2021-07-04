@@ -16,10 +16,6 @@ export default class PaintersController {
 
     public async registerPainting(ctx) {
         const data = ctx.request.all()
-        // const data = {
-        //     address: "0x2",
-        //     painting_id: "100"
-        // }
         try {
             let res;
             try {
