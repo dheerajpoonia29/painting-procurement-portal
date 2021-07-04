@@ -1,1 +1,0 @@
-https://projects.wojtekmaj.pl/react-timerange-picker/
