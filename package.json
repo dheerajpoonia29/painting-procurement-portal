@@ -1,0 +1,31 @@
+{
+  "name": "paintingprocurementportal-finalyearproject",
+  "version": "1.0.0",
+  "description": "Painting Procurement Portal based on Blockchain",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "dev": "lite-server -c configs/lite-server-config.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dheerajpoonia29/paintingProcurementPortal-finalYearProject.git"
+  },
+  "keywords": [
+    "blockchain",
+    "painting",
+    "procurement"
+  ],
+  "author": "DynamicCrew",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dheerajpoonia29/paintingProcurementPortal-finalYearProject/issues"
+  },
+  "homepage": "https://github.com/dheerajpoonia29/paintingProcurementPortal-finalYearProject#readme",
+  "devDependencies": {
+    "lite-server": "^2.6.1"
+  }
+}

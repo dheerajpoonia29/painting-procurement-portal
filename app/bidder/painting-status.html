@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<!--
+	Hielo by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Painting Detail | Painting Procurement Portal</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<script>
+			function increaseCount() {
+				document.getElementById('eth_val').value = Number(document.getElementById('eth_val').value) >= 0 ? Number(document.getElementById('eth_val').value) + 1 : 0;
+			}
+			function decreaseCount() {
+				document.getElementById('eth_val').value = Number(document.getElementById('eth_val').value) - 1 >= 0 ? Number(document.getElementById('eth_val').value) - 1 : 0;
+			}
+			function sleep(milliseconds) {  
+				return new Promise(resolve => setTimeout(resolve, milliseconds));  
+			}
+			async function countdown() {
+				while(1) {
+					await sleep(1000).then(() => {
+						if(Number(document.getElementById('ss').value) - 1 >= 0) {
+							document.getElementById('ss').value = Number(document.getElementById('ss').value) - 1;
+						} else {
+							document.getElementById('ss').value = 59;
+							if(Number(document.getElementById('mm').value) - 1 >= 0) {
+								document.getElementById('mm').value = Number(document.getElementById('mm').value) - 1;
+							} else {
+								document.getElementById('mm').value = 59;
+								if(Number(document.getElementById('hh').value) - 1 >= 0) {
+									document.getElementById('hh').value = Number(document.getElementById('hh').value) - 1;
+								} else {
+									document.getElementById('hh').value = 23;
+									document.getElementById('dd').value = Number(document.getElementById('dd').value) - 1 >= 0 ? Number(document.getElementById('dd').value) - 1 : 0;
+								}
+							}
+						}
+					})
+				}
+			}
+			window.onload = countdown();
+		</script>
+	</head>
+	<body class="subpage">
+
+		<!-- Header -->
+			<header id="header">
+				<div class="logo"><a href="index.html">Home </a></div>
+				<a href="#menu">Menu</a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="../index.html">Home</a></li>
+					<li><a href="signout.html">Sign out</a></li>
+				</ul>
+			</nav>
+
+		<!-- One -->
+			<!-- <section id="One" class="wrapper style3">
+				<div class="inner">
+					<header class="align-center">
+						<p>painting procurement portal</p>
+						<h2>Painting Status</h2>
+					</header>
+				</div>
+			</section> -->
+
+		<!-- Main -->
+			<div id="main" class="container">
+				<div class="6u" style="margin: 0 auto;">
+					<header class="align-center">
+						<h2>Painting Status</h2>
+						<p>Aurora borelis</p>
+					</header>
+					<a href="painting-detail.html"><span class="image fit"><img src="../images/pic01.jpg" alt="" /></span></a>
+					<div class="12u">
+						<h2>Max bid</h2>
+						<ul class="actions">
+							<li><input type="text" name="eth_val" id="eth_val" class="align-center" value="6" disabled="disabled"></li>
+						</ul>
+						<h2>Time Remaining</h2>
+						<div class="row uniform">
+							<div class="3u 12u$(xsmall)">
+								<input type="text" name="dd" id="dd" value="04" class="align-center" disabled="disabled"/>
+							</div>
+							<div class="3u 12u$(xsmall)">
+								<input type="text" name="hh" id="hh" value="13" class="align-center" disabled="disabled"/>
+							</div>
+							<div class="3u 12u$(xsmall)">
+								<input type="text" name="mm" id="mm" value="45" class="align-center" disabled="disabled"/>
+							</div>
+							<div class="3u 12u$(xsmall)">
+								<input type="text" name="ss" id="ss" value="59" class="align-center" disabled="disabled"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="container">
+					<ul class="icons">
+						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
+					</ul>
+				</div>
+				<div class="copyright">
+					&copy; Untitled. All rights reserved.
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+	</body>
+</html>
