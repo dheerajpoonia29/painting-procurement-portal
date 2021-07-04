@@ -1,7 +1,7 @@
 import axios from "axios";
 
 class ApiManager {
-  static baseUrl = "http://127.0.0.1:3333/api/";
+  static baseUrl = "http://127.0.0.1:43461/api/";
 
   static paintingEndPoints = {
     getAll: "painting/get-all",
