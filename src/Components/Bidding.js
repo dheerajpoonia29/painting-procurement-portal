@@ -156,6 +156,17 @@ class Bidding extends Component {
     );
   }
 
+  checkWithinTimeLimit() {
+    const time_limits = this.props.bidTime.split(',')
+    const start_time = Number(time_limits[0].replace(':', ''))
+    const end_time = Number(time_limits[1].replace(':',''))
+    const date = new Date();
+    const current_time = Number(String(date.getHours()) + String((date.getMinutes()<10?'0':'') + date.getMinutes()));
+    if(current_time > end_time) return 'expired'
+    else if(current_time >= start_time && current_time <= end_time) return 'ongoing'
+    else return 'future';
+  }
+
   renderBidInfo() {
     return (
       <div>
@@ -186,8 +197,7 @@ class Bidding extends Component {
   }
 
   renderBidTimer() {
-    // TODO: implement check time perfectly
-    if (this.checkAccess()) {
+    if (this.checkDate() === 'today' && this.checkWithinTimeLimit() === 'ongoing') {
       return (
         <div>
           <hr className="solid"></hr>
@@ -225,20 +235,27 @@ class Bidding extends Component {
           </div>
         </div>
       );
+    } else if(this.checkDate() === "today" && this.checkWithinTimeLimit() == 'future' || this.checkDate() == 'future') {
+      return (
+        <div>
+          <hr className="solid"></hr>
+          <div style={{ float: "left" }}>
+            <p style={{ backgroundColor: "red"}}>Bid is upcoming!</p>
+          </div>
+          <div style={{ float: "right" }}>
+            <p style={{ backgroundColor: "skyblue" }}>
+              Heigest Bid: {this.props.heighestBid}
+            </p>
+            <p>Bid for: {this.state.bidDuration} Sec</p>
+          </div>
+        </div>
+      );
     } else {
       return (
         <div>
           <hr className="solid"></hr>
           <div style={{ float: "left" }}>
-            <CountdownCircleTimer
-              key={this.props.paintingId}
-              isPlaying={false}
-              duration={0}
-              colors={"#151932"}
-              strokeWidth={10}
-              size={80}
-              trailColor="#151932"
-            />
+            <p style={{ backgroundColor: "red"}}>Bid is expired!</p>
           </div>
           <div style={{ float: "right" }}>
             <p style={{ backgroundColor: "skyblue" }}>
