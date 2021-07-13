@@ -10,7 +10,7 @@ export default class PaintersController {
 
     public async getPaintingIds(ctx) {
         let painter = await Painter.findBy('address', ctx.params.address);
-        painter = painter.toJSON()
+        painter ? painter = painter.toJSON() : console.log('no painter');
         return painter ? painter.painting_id.split(',').map((val) => parseInt(val)) : [];
     }
 
