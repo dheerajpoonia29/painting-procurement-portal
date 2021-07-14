@@ -1,4 +1,5 @@
-import "../css/form.css";
+// import "../css/form.css";
+import "../css/helio.css";
 
 import { Component } from "react";
 import DatePicker from "react-date-picker";
@@ -63,90 +64,91 @@ class Form extends Component {
 
   render() {
     return (
-      <div className="form-style-2">
-        <div className="form-style-2-heading">Register your new painting</div>
-        {/* <form action="" method="post"> */}
-        <label for="painter">
-          <span>
-            Address <span className="required">*</span>
-          </span>
-          <input
-            type="text"
-            className="input-field"
-            name="painter"
-            value={this.state.painter}
-            onChange={this.handleChange}
-            placeholder="Your metmask address"
-          />
-        </label>
-        <label for="name">
-          <span>
-            Painting Name <span className="required">*</span>
-          </span>
-          <input
-            type="text"
-            className="input-field"
-            name="name"
-            value={this.state.name}
-            onChange={this.handleChange}
-            placeholder="Your painting name"
-          />
-        </label>
-        <label for="artist">
-          <span>
-            Artist Name <span className="required">*</span>
-          </span>
-          <input
-            type="text"
-            className="input-field"
-            name="artist"
-            value={this.state.artist}
-            onChange={this.handleChange}
-            placeholder="Your name"
-          />
-        </label>
-        <label for="image">
-          <span>
-            Painting Url <span className="required">*</span>
-          </span>
-          <input
-            type="text"
-            className="input-field"
-            name="image"
-            value={this.state.image}
-            onChange={this.handleChange}
-            placeholder="Your image url"
-          />
-        </label>
-        <label for="date">
-          <span>
-            Bid Date <span className="required">*</span>
-          </span>
-          <DatePicker
-            onChange={(dp) => this.setState({ date: dp })}
-            value={this.state.date}
-          />
-          className
-        </label>
-        <label for="time">
-          <span>
-            Start Time <span className="required">*</span>
-          </span>
-          <TimeRangePicker
-            onChange={(tp) => this.setState({ time: tp })}
-            value={this.state.time}
-          />
-        </label>
+      <div className="row">
+        <form>
+        <h3>Register your new painting</h3>
+          <label for="painter">
+            <span>
+              Address <span style={{color: "red"}}>*</span>
+            </span>
+            <input
+              type="text"
+              className="input-field"
+              name="painter"
+              value={this.state.painter}
+              onChange={this.handleChange}
+              placeholder="Your metmask address"
+            />
+          </label>
+          <label for="name">
+            <span>
+              Painting Name <span className="required">*</span>
+            </span>
+            <input
+              type="text"
+              className="input-field"
+              name="name"
+              value={this.state.name}
+              onChange={this.handleChange}
+              placeholder="Your painting name"
+            />
+          </label>
+          <label for="artist">
+            <span>
+              Artist Name <span className="required">*</span>
+            </span>
+            <input
+              type="text"
+              className="input-field"
+              name="artist"
+              value={this.state.artist}
+              onChange={this.handleChange}
+              placeholder="Your name"
+            />
+          </label>
+          <label for="image">
+            <span>
+              Painting Url <span className="required">*</span>
+            </span>
+            <input
+              type="text"
+              className="input-field"
+              name="image"
+              value={this.state.image}
+              onChange={this.handleChange}
+              placeholder="Your image url"
+            />
+          </label>
+          <label for="date">
+            <span>
+              Bid Date <span className="required">*</span>
+            </span>
+            <DatePicker
+              onChange={(dp) => this.setState({ date: dp })}
+              value={this.state.date}
+            />
+          </label>
+          <label for="time">
+            <span>
+              Start Time <span className="required">*</span>
+            </span>
+            <TimeRangePicker
+              onChange={(tp) => this.setState({ time: tp })}
+              value={this.state.time}
+            />
+          </label>
 
-        <label>
-          <span> </span>
-          <input
-            type="submit"
-            onClick={() => this.handleSubmit()}
-            value="Submit"
-          />
-        </label>
-        {/* </form> */}
+          <label>
+            <span> </span>
+            <input
+              className="button special"
+              style={{marginTop: "40px"}}
+              type="submit"
+              onClick={() => this.handleSubmit()}
+              value="Submit"
+            />
+          </label>
+        </form>
       </div>
     );
   }
