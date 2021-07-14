@@ -2,6 +2,7 @@ import "./css/app.css";
 
 import Header from "./Components/Header";
 import HomeScene from "./Components/HomeScene";
+import Footer from "./Components/Footer";
 import { Component } from "react";
 const Web3 = require('web3');
 const {ethereum} = window;
@@ -43,6 +44,7 @@ class App extends Component {
       <div className="App">
         <Header account={this.state.currentAccount} balance={this.state.currentAccountBalance}/>
         <HomeScene />
+        <Footer />
       </div>
     );
   }
