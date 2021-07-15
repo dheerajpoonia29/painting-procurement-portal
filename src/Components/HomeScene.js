@@ -1,5 +1,5 @@
 import "../css/homeScene.css";
-
+import "../css/helio.css";
 import { Component } from "react";
 import Card from "./Card";
 import Form from "./Form";
@@ -27,15 +27,11 @@ class HomeScene extends Component {
       .catch((err) => alert(`Api error, ${err}`));
   }
 
-  inlineStyle = (current) => {
+  inLineClass = (current) => {
     if (this.state.action === current) {
-      return {
-        backgroundColor: "green",
-      };
+      return "button special";
     } else {
-      return {
-        backgroundColor: "grey",
-      };
+      return "button alt";
     }
   };
 
@@ -93,18 +89,17 @@ class HomeScene extends Component {
 
   render() {
     return (
-      <div className="HomeSceneContainer">
-        <div className="action" style={{ float: "left" }}>
+      <div className="container" style={{paddingTop: '85px'}}>
+        <div className="row 200%">
+        <div className="4u 12u$(medium)">
           <button
-            className="button"
-            style={this.inlineStyle("about")}
+            className={this.inLineClass("about")}
             onClick={() => this.setState({ action: "about" })}
           >
             About
           </button>
           <button
-            className="button"
-            style={this.inlineStyle("painter")}
+            className={this.inLineClass("painter")}
             onClick={() => {
               this.componentDidMount();
               this.setState({ action: "painter" });
@@ -113,8 +108,7 @@ class HomeScene extends Component {
             Painter
           </button>
           <button
-            className="button"
-            style={this.inlineStyle("bidder")}
+            className={this.inLineClass("bidder")}
             onClick={() => {
               this.componentDidMount();
               this.setState({ action: "bidder" });
@@ -123,19 +117,19 @@ class HomeScene extends Component {
             Bidder
           </button>
           <button
-            className="button"
-            style={this.inlineStyle("create")}
+            className={this.inLineClass("create")}
             onClick={() => this.setState({ action: "create" })}
           >
             Add Painting
           </button>
         </div>
-        <div className="detail" style={{ float: "right" }}>
+        <div className="detail" className="8u 12u$(medium)">
           {this.state.action === "about" && this.renderAbout()}
           {this.state.action === "painter" && this.renderPainter()}
           {this.state.action === "bidder" && this.renderBidder()}
           {this.state.action === "create" && this.renderCreate()}
         </div>
+      </div>
       </div>
     );
   }

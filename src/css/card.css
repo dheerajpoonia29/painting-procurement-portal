@@ -51,8 +51,9 @@
 
 .painting .card {
   margin: 10px 10px 10px;
-  width: calc(33.33% - 40px);
+  width: calc(50% - 20px);
   display: flex;
+  float: left;
   flex-direction: column;
   background-color: whitesmoke;
   

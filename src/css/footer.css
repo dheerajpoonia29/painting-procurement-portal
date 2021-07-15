@@ -1,0 +1,12 @@
+#footer {
+    position:relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.spacer {
+    background: #f1f1f1;
+    height: 20px;
+    flex: 1;
+}
