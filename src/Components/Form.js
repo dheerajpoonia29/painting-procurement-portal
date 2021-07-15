@@ -1,6 +1,4 @@
-// import "../css/form.css";
-import "../css/helio.css";
-
+import "../css/form.css";
 import { Component } from "react";
 import DatePicker from "react-date-picker";
 import TimeRangePicker from "@wojtekmaj/react-timerange-picker";
@@ -64,79 +62,90 @@ class Form extends Component {
 
   render() {
     return (
-      <div className="row">
+      <div className="row uniform">
+        <div className="12u 12u$(xsmall)">
         <form>
-        <h3>Register your new painting</h3>
+        <h3 className="form-heading">Register your new painting</h3>
+          {/* Painter address  */}
           <label for="painter">
-            <span>
               Address <span style={{color: "red"}}>*</span>
-            </span>
-            <input
+          </label>
+          <input
               type="text"
               className="input-field"
+              style={{marginRight: '0px', width: '70%', marginBottom: '15px'}}
               name="painter"
               value={this.state.painter}
               onChange={this.handleChange}
               placeholder="Your metmask address"
             />
-          </label>
+            {/* Painting name */}
           <label for="name">
             <span>
-              Painting Name <span className="required">*</span>
+              Painting Name <span style={{color: "red"}}>*</span>
             </span>
-            <input
+          </label>
+          <input
               type="text"
               className="input-field"
+              style={{marginRight: '0px', width: '70%', marginBottom: '15px'}}
               name="name"
               value={this.state.name}
               onChange={this.handleChange}
               placeholder="Your painting name"
-            />
-          </label>
+          />
+          {/* Painting artist */}
           <label for="artist">
-            <span>
-              Artist Name <span className="required">*</span>
-            </span>
-            <input
+              Artist Name <span style={{color: "red"}}>*</span>
+          </label>
+          <input
               type="text"
               className="input-field"
+              style={{marginRight: '0px', width: '70%', marginBottom: '15px'}}
               name="artist"
               value={this.state.artist}
               onChange={this.handleChange}
               placeholder="Your name"
             />
-          </label>
+          {/* Painting Url */}
           <label for="image">
             <span>
-              Painting Url <span className="required">*</span>
+              Painting Url <span style={{color: "red"}}>*</span>
             </span>
-            <input
+          </label>
+          <input
               type="text"
               className="input-field"
+              style={{marginRight: '0px', width: '70%', marginBottom: '15px'}}
               name="image"
               value={this.state.image}
               onChange={this.handleChange}
               placeholder="Your image url"
             />
-          </label>
           <label for="date">
             <span>
-              Bid Date <span className="required">*</span>
+              Bid Date <span style={{color: "red"}}>*</span>
             </span>
-            <DatePicker
-              onChange={(dp) => this.setState({ date: dp })}
-              value={this.state.date}
-            />
           </label>
+          <div id="date">
+            <DatePicker
+                onChange={(dp) => this.setState({ date: dp })}
+                value={this.state.date}
+            />
+          </div>
           <label for="time">
             <span>
-              Start Time <span className="required">*</span>
+              Start Time <span style={{color: "red"}}>*</span>
             </span>
-            <TimeRangePicker
-              onChange={(tp) => this.setState({ time: tp })}
-              value={this.state.time}
-            />
           </label>
+          <div id="time">
+            <TimeRangePicker
+                id="time"
+                style={{display: 'none'}}
+                onChange={(tp) => this.setState({ time: tp })}
+                value={this.state.time}
+            />
+          </div>
 
           <label>
             <span> </span>
@@ -149,6 +158,7 @@ class Form extends Component {
             />
           </label>
         </form>
+        </div>
       </div>
     );
   }
