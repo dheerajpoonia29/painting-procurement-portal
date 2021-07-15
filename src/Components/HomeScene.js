@@ -48,17 +48,14 @@ class HomeScene extends Component {
   }
 
   renderPainter() {
-    // TODO: blockchain.getPainterPaintingsId(current_metmask_address);
     return (
       <div className="painting">
+        <h3>Your paintings</h3>
         {this.state.paintingJson !== null &&
-          this.state.paintingJson.map((data, key) => {
-            if (
-              this.state.paintingId !== null
-               &&
-              this.state.paintingId.indexOf(data.id) !== -1
-            )
-              return <Card data={data} action={"painter"} />;
+          this.state.paintingJson.map(data => {
+            if(String(data.painter).toLowerCase()===String(this.props.account).toLowerCase()) {
+              return <Card data={data} action={"painter"} />
+            }
           })}
         {this.state.paintingJson === null && <h1>Not painting found</h1>}
       </div>
@@ -68,6 +65,7 @@ class HomeScene extends Component {
   renderBidder() {
     return (
       <div className="painting">
+        <h3>Paintings available to bid</h3>
         {this.state.paintingJson !== null &&
           this.state.paintingJson.map((data, key) => {
              {
@@ -123,7 +121,7 @@ class HomeScene extends Component {
             Add Painting
           </button>
         </div>
-        <div className="detail" className="8u 12u$(medium)">
+        <div className="8u 12u$(medium)">
           {this.state.action === "about" && this.renderAbout()}
           {this.state.action === "painter" && this.renderPainter()}
           {this.state.action === "bidder" && this.renderBidder()}

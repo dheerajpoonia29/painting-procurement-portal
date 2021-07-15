@@ -43,7 +43,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header account={this.state.currentAccount} balance={this.state.currentAccountBalance}/>
-        <HomeScene />
+        <HomeScene account={this.state.currentAccount}/>
         <Footer />
       </div>
     );
