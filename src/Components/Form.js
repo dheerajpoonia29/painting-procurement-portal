@@ -11,7 +11,7 @@ class Form extends Component {
     this.state = {
       name: "",
       artist: "",
-      painter: "",
+      painter: this.props.account,
       image: "",
       date: "",
       time: "",
@@ -64,7 +64,7 @@ class Form extends Component {
     return (
       <div className="row uniform">
         <div className="12u 12u$(xsmall)">
-        <form>
+        {/* <form> */}
         <h3 className="form-heading">Register your new painting</h3>
           {/* Painter address  */}
           <label for="painter">
@@ -157,7 +157,7 @@ class Form extends Component {
               value="Submit"
             />
           </label>
-        </form>
+        {/* </form> */}
         </div>
       </div>
     );

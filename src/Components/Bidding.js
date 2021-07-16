@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import ApiClient from "../ApiManager";
+const {ethereum} = window;
 
 class Bidding extends Component {
   constructor(props) {
@@ -49,7 +50,7 @@ class Bidding extends Component {
   handleSubmit() {
     let input = this.bidInput;
     let currentBid = parseInt(input.current.value);
-    let currentAdd = "0x7";
+    let currentAdd = this.props.account;
     if (currentBid > this.state.heighest_bid) {
       this.setState(
         {
@@ -61,8 +62,28 @@ class Bidding extends Component {
     }
   }
 
-  postBid(currentBid, currentAdd) {
-    // TODO: get current metamask address
+  async postBid(currentBid, currentAdd) {
+    alert(currentBid)
+    var currentBidGwei = (currentBid/2) * 10e14;
+    // Will send immediately for instant demo purposes
+    const transactionParameters = {
+      nonce: '0x00', // ignored by MetaMask
+      gasPrice: '0x09184e72a000', // customizable by user during MetaMask confirmation.
+      gas: '0x2710', // customizable by user during MetaMask confirmation.
+      to: this.props.painter, // Required except during contract publications.
+      from: this.props.account, // must match user's active address.
+      value: '0x' + currentBidGwei.toString(16), // Only required to send ether to the recipient from the initiating external account.
+      chainId: '0x3', // Used to prevent transaction reuse across blockchains. Auto-filled by MetaMask.
+    };
+    
+    // txHash is a hex string
+    // As with any RPC call, it may throw an error
+    const txHash = await ethereum.request({
+      method: 'eth_sendTransaction',
+      params: [transactionParameters],
+    });
+
+    alert('Transaction has been initiated!')
     let params = {
       address: currentAdd,
       painting_id: this.props.paintingId,

@@ -19,7 +19,7 @@ function Card(props) {
         
 
         <div>
-          <Bidding painter={painting.painter} bidder={painting.bidder} heighestBid={painting.heighest_bid} bidClosed={painting.is_bid_closed} bidDate={painting.date} paintingId={painting.id} bidTime={painting.time} role={props.action}/>
+          <Bidding painter={painting.painter} bidder={painting.bidder} heighestBid={painting.heighest_bid} bidClosed={painting.is_bid_closed} bidDate={painting.date} paintingId={painting.id} bidTime={painting.time} account={props.account} role={props.action}/>
         </div>
       </div>
     </div>

@@ -69,7 +69,7 @@ class HomeScene extends Component {
         {this.state.paintingJson !== null &&
           this.state.paintingJson.map((data, key) => {
              {
-              return <Card data={data} action={"bidder"} />;
+              return <Card data={data} action={"bidder"} account={this.props.account} />;
             }             
           })}
         {this.state.paintingJson === null && <h1>Not painting found</h1>}
@@ -80,7 +80,7 @@ class HomeScene extends Component {
   renderCreate() {
     return (
       <div className="form">
-        <Form />
+        <Form account={this.props.account}/>
       </div>
     );
   }
